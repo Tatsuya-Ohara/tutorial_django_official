@@ -8,6 +8,7 @@ from .models import Choice, Question
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
+    # デフォルトはquestion_list。変更するには"context_object_name"属性を与える。
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
