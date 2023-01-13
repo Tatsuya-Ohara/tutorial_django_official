@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.contrib import admin
 
 
 class Question(models.Model):
@@ -10,12 +11,18 @@ class Question(models.Model):
     def __str__(self):
         '''オブジェクトを質問文で返す'''
         return self.question_text
+    # ×マークにする
+    @admin.display(
+        boolean=True,
+        ordering='pub_date',
+        description='Published recently?',
+    )
     def was_published_recently(self):
         '''独自メソッド: 作成日の確認'''
         now = timezone.now()
         # 昨日から今日までに投稿されたものをTrueとする
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        # return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
     '''選択肢'''
