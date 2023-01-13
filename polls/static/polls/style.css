@@ -1,0 +1,8 @@
+li a {
+    color: green;
+}
+
+body {
+    /* パスは常に相対パスで記述する */
+    background: white url("images/background.png") no-repeat;
+}
