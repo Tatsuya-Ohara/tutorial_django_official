@@ -12,6 +12,9 @@ class Question(models.Model):
         return self.question_text
     def was_published_recently(self):
         '''独自メソッド: 作成日の確認'''
+        now = timezone.now()
+        # 昨日から今日までに投稿されたものをTrueとする
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
