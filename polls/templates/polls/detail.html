@@ -1,6 +1,29 @@
+<!-- form action=データ送信先の属性 / サーバーサイドを変更するのでpost -->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<!-- 自サイトへのpostにはcsrf_tokenが必須 -->
+{% csrf_token %}
+<!-- fieldsetタグ=入力項目をグループ化する -->
+<fieldset>
+    <!-- lengend=fieldsetタグに使う見出しのこと -->
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    <!-- エラーの場合はメッセージを太字で表示 -->
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <!--  -->
+    {% for choice in question.choice_set.all %}
+        <!-- 選択するとchoice=valueが渡される -->
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id}}">
+        <!-- 選択肢を表示する -->
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+<br>
+    {% endfor %}
+</fieldset>
+<input type="submit" value="Vote!">
+</form>
+
+<!-- ただ見出しと質問をリスト表示するだけのもの
 <h1>{{ question.question_text }}</h1>
 <ul>
     {% for choice in question.choice_set.all %}
         <li>{{ choice.choice_text }}</li>
     {% endfor %}
-</ul>
+</ul> -->
